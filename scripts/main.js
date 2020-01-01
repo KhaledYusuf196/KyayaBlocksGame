@@ -6,7 +6,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 },
+            gravity: { y:0 },
             debug: true
         }
     },
@@ -40,10 +40,13 @@ function create() {
     ball.setCollideWorldBounds(true);
     players[0].setCollideWorldBounds(true);
     players[1].setCollideWorldBounds(true);
+    ball.setBounce(0.2);
+    ball.setVelocityY(-330);
+
 
     //this.createPlayer();
 }
 
 function update() {
-
+  
 }

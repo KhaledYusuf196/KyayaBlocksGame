@@ -6,7 +6,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y:0 },
+            gravity: { y: 0 },
             debug: true
         }
     },
@@ -24,12 +24,15 @@ var playerControl;
 
 var cursors;
 function createPlayer(scene) {
-    
+
 }
 
 function preload() {
     cursors = this.input.keyboard.createCursorKeys();
-
+    playerControl = {
+        left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+        right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+    }
 
     console.log(this);
     this.load.image('sky', 'assets/sky.png');
@@ -38,26 +41,24 @@ function preload() {
 }
 
 function create() {
-    
-    playerControl = {
-        left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-        right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-    }
+
     cursors = this.input.keyboard.createCursorKeys();
     //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
 
     this.add.image(400, 300, 'sky');
-    ball = this.physics.add.image(400, 300, 'ball');
-    players[0] = this.physics.add.image(400, 100, 'player');
-    players[1] = this.physics.add.image(400, 500, 'player');
+    ball = this.physics.add.image(400, 300, 'ball').setScale(0.5);
+    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.5);
+    players[1] = this.physics.add.image(400, 500, 'player').setScale(0.5);
     ball.setCollideWorldBounds(true);
     players[0].setCollideWorldBounds(true);
     players[1].setCollideWorldBounds(true);
-    ball.setBounce(0.2);
+    ball.setBounce(1);
+    players[0].setBounce(.5);
+    players[1].setBounce(.5);
+
     ball.setVelocityY(-330);
+    this.physics.add.overlap(ball, players, pushBall, null, this);
 
-
-    //this.createPlayer();
 }
 
 function update() {
@@ -71,24 +72,30 @@ function update() {
         players[1].setVelocityX(0);
     }
 
-   
 
-    if (cursors.left.isDown)
-    {
+
+    if (cursors.left.isDown) {
         players[0].setVelocityX(-320);
 
     }
-    else if (cursors.right.isDown)
-    {
+    else if (cursors.right.isDown) {
         players[0].setVelocityX(320);
-    
+
 
     }
-    else
-    {
+    else {
         players[0].setVelocityX(0);
-    
-
     }
-  
+
+}
+
+function pushBall(ball, player) {
+    var direction = {
+        x: ball.x - player.x,
+        y: ball.y - player.y,
+    };
+    normal = [direction.x / Math.sqrt(direction.x * direction.x + direction.y * direction.y), direction.y / Math.sqrt(direction.x * direction.x + direction.y * direction.y)]
+    ball.body.velocity.x = 1000 * normal[0];
+    ball.body.velocity.y = 1000 * normal[1];
+    console.log(direction);
 }

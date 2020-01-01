@@ -20,12 +20,15 @@ var config = {
 var game = new Phaser.Game(config);
 var players = new Array(2);
 var ball;
-
+var cursors;
 function createPlayer(scene) {
     
 }
 
 function preload() {
+    cursors = this.input.keyboard.createCursorKeys();
+
+
     console.log(this);
     this.load.image('sky', 'assets/sky.png');
     this.load.image('player', 'assets/playerPlatform.png');
@@ -33,6 +36,9 @@ function preload() {
 }
 
 function create() {
+    cursors = this.input.keyboard.createCursorKeys();
+    //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
+
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball');
     players[0] = this.physics.add.image(400, 100, 'player');
@@ -45,5 +51,24 @@ function create() {
 }
 
 function update() {
+   
 
+    if (cursors.left.isDown)
+    {
+        players[0].setVelocityX(-320);
+
+    }
+    else if (cursors.right.isDown)
+    {
+        players[0].setVelocityX(320);
+    
+
+    }
+    else
+    {
+        players[0].setVelocityX(0);
+    
+
+    }
+  
 }

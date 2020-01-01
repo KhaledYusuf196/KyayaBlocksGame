@@ -22,11 +22,15 @@ var players = new Array(2);
 var ball;
 var playerControl;
 
+var cursors;
 function createPlayer(scene) {
     
 }
 
 function preload() {
+    cursors = this.input.keyboard.createCursorKeys();
+
+
     console.log(this);
     this.load.image('sky', 'assets/sky.png');
     this.load.image('player', 'assets/playerPlatform.png');
@@ -39,6 +43,8 @@ function create() {
         left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
         right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
     }
+    cursors = this.input.keyboard.createCursorKeys();
+    //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
 
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball');
@@ -52,6 +58,7 @@ function create() {
 }
 
 function update() {
+
     if (playerControl.left.isDown) {
         players[1].setVelocityX(-320);
     }
@@ -60,4 +67,25 @@ function update() {
     } else {
         players[1].setVelocityX(0);
     }
+
+   
+
+    if (cursors.left.isDown)
+    {
+        players[0].setVelocityX(-320);
+
+    }
+    else if (cursors.right.isDown)
+    {
+        players[0].setVelocityX(320);
+    
+
+    }
+    else
+    {
+        players[0].setVelocityX(0);
+    
+
+    }
+  
 }

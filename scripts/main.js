@@ -21,7 +21,12 @@ var game = new Phaser.Game(config);
 var players = new Array(2);
 var ball;
 
+function createPlayer(scene) {
+    
+}
+
 function preload() {
+    console.log(this);
     this.load.image('sky', 'assets/sky.png');
     this.load.image('player', 'assets/playerPlatform.png');
     this.load.image('ball', 'assets/ball.png');
@@ -30,9 +35,13 @@ function preload() {
 function create() {
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball');
-    this.add.image(400, 100, 'player');
-    this.add.image(400, 500, 'player');
-    ball.setCollideWorldBounds(false);
+    players[0] = this.physics.add.image(400, 100, 'player');
+    players[1] = this.physics.add.image(400, 500, 'player');
+    ball.setCollideWorldBounds(true);
+    players[0].setCollideWorldBounds(true);
+    players[1].setCollideWorldBounds(true);
+
+    //this.createPlayer();
 }
 
 function update() {

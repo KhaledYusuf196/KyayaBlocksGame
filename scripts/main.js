@@ -16,17 +16,15 @@ var config = {
         update: update
     }
 };
-
+var targets = [];
 var game = new Phaser.Game(config);
 var players = new Array(2);
 var ball;
 var playerControl;
 
+var scoreText;
+
 var cursors;
-function createPlayer(scene) {
-
-}
-
 function preload() {
     cursors = this.input.keyboard.createCursorKeys();
     playerControl = {
@@ -58,6 +56,22 @@ function create() {
 
     ball.setVelocityY(-330);
     this.physics.add.overlap(ball, players, pushBall, null, this);
+
+    players[0].score = 0;
+    players[1].score = 0;
+
+
+    targets[0] = this.physics.add.staticImage(400, 0, null);
+    targets[1] = this.physics.add.staticImage(400, 600, null);
+
+    this.physics.add.overlap(ball, targets[0], () => { score(1) }, null, this);
+    this.physics.add.overlap(ball, targets[1], () => { score(0) }, null, this);
+    
+    //console.log(targets[0].scale = {x:2, y:1});
+    scoreText = this.add.text(16, 16, 'score: 0 - 0', { fontSize: '32px', fill: '#000' });
+
+
+    
 
 }
 
@@ -98,4 +112,22 @@ function pushBall(ball, player) {
     ball.body.velocity.x = 1000 * normal[0];
     ball.body.velocity.y = 1000 * normal[1];
     console.log(direction);
+}
+
+function score(scorer) {
+    players[scorer].score++;
+    ball.x = 400;
+    ball.y = 300;
+    if (scorer == 1){
+        ball.setVelocityY(-100);
+        ball.setVelocityX(0);
+    }
+        
+    else {
+        ball.setVelocityY(100);
+        ball.setVelocityX(0);
+    }
+
+    scoreText.setText(players[0].score + " : " + players[1].score);
+        
 }

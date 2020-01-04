@@ -56,7 +56,8 @@ function create() {
 
     ball.setVelocityY(-330);
     this.physics.add.overlap(ball, players, pushBall, null, this);
-
+    players[0].setTint(0xff0000);
+    players[1].setTint(0x0000ff);
     players[0].score = 0;
     players[1].score = 0;
 
@@ -68,7 +69,7 @@ function create() {
     this.physics.add.overlap(ball, targets[1], () => { score(0) }, null, this);
     
     //console.log(targets[0].scale = {x:2, y:1});
-    scoreText = this.add.text(16, 16, 'score: 0 - 0', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(16, 16, 'Red 0 - 0 Blue', { fontSize: '32px', fill: '#000' });
 
 
     
@@ -128,6 +129,6 @@ function score(scorer) {
         ball.setVelocityX(0);
     }
 
-    scoreText.setText(players[0].score + " : " + players[1].score);
+    scoreText.setText("Red " + players[0].score + " - " + players[1].score + " Blue");
         
 }

@@ -63,8 +63,8 @@ function create() {
     players[1].score = 0;
 
 
-    targets[0] = this.physics.add.staticImage(400, 0, null);
-    targets[1] = this.physics.add.staticImage(400, 600, null);
+    targets[0] = this.physics.add.staticImage(400, 0, 'network').setScale(0.5).refreshBody();
+    targets[1] = this.physics.add.staticImage(400, 600, 'network').setScale(0.5).refreshBody();
 
     this.physics.add.overlap(ball, targets[0], () => { score(1) }, null, this);
     this.physics.add.overlap(ball, targets[1], () => { score(0) }, null, this);

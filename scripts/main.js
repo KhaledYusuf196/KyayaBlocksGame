@@ -34,8 +34,9 @@ function preload() {
 
     console.log(this);
     this.load.image('sky', 'assets/sky.png');
-    this.load.image('player', 'assets/playerPlatform.png');
+    this.load.image('player', 'assets/character.png');
     this.load.image('ball', 'assets/ball.png');
+    this.load.image('network', 'assets/network.png');
 }
 
 function create() {
@@ -45,8 +46,8 @@ function create() {
 
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball').setScale(0.5);
-    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.5);
-    players[1] = this.physics.add.image(400, 500, 'player').setScale(0.5);
+    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.1);
+    players[1] = this.physics.add.image(400, 500, 'player').setScale(0.1);
     ball.setCollideWorldBounds(true);
     players[0].setCollideWorldBounds(true);
     players[1].setCollideWorldBounds(true);
@@ -56,8 +57,8 @@ function create() {
 
     ball.setVelocityY(-330);
     this.physics.add.overlap(ball, players, pushBall, null, this);
-    players[0].setTint(0xff0000);
-    players[1].setTint(0x0000ff);
+    // players[0].setTint(0xff0000);
+    // players[1].setTint(0x0000ff);
     players[0].score = 0;
     players[1].score = 0;
 

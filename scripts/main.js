@@ -39,8 +39,8 @@ function preload() {
     this.load.image('network', 'assets/network.png');
 
     this.load.spritesheet('girl', 
-    'ch.png',
-    { frameWidth: 32, frameHeight: 48 }
+    'assets/ch.png',
+    { frameWidth: 163, frameHeight: 141 }
 );
 }
 

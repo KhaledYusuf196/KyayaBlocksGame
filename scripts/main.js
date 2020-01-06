@@ -37,16 +37,28 @@ function preload() {
     this.load.image('player', 'assets/character.png');
     this.load.image('ball', 'assets/ball.png');
     this.load.image('network', 'assets/network.png');
+
+    this.load.spritesheet('girl', 
+    'ch.png',
+    { frameWidth: 32, frameHeight: 48 }
+);
 }
 
 function create() {
-
+  
     cursors = this.input.keyboard.createCursorKeys();
     //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
 
+    this.anims.create({
+        key: 'left',
+        frames: this.anims.generateFrameNumbers('girl', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball').setScale(0.5);
-    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.1);
+    players[0] = this.physics.add.sprite(400, 100, 'girl');
     players[1] = this.physics.add.image(400, 500, 'player').setScale(0.1);
     ball.setCollideWorldBounds(true);
     players[0].setCollideWorldBounds(true);
@@ -78,7 +90,7 @@ function create() {
 }
 
 function update() {
-
+   
     if (playerControl.left.isDown) {
         players[1].setVelocityX(-320);
     }

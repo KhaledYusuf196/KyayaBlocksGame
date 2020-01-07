@@ -39,8 +39,8 @@ function preload() {
     this.load.image('network', 'assets/network.png');
 
     this.load.spritesheet('girl', 
-    'assets/ch.png',
-    { frameWidth: 163, frameHeight: 141 }
+    'assets/running-sprite-sheet-png-1.png',
+    { frameWidth: 120, frameHeight: 130 }
 );
 }
 
@@ -50,15 +50,22 @@ function create() {
     //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
 
     this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('girl', { start:1 , end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('girl', { start: 0, end: 3 }),
+        frames: this.anims.generateFrameNumbers('girl', { start:16 , end: 9 }),
         frameRate: 10,
         repeat: -1
     });
 
     this.add.image(400, 300, 'sky');
     ball = this.physics.add.image(400, 300, 'ball').setScale(0.5);
-    players[0] = this.physics.add.sprite(400, 100, 'girl');
+    players[0] = this.physics.add.sprite(400, 100, 'girl').setScale(0.7);
     players[1] = this.physics.add.image(400, 500, 'player').setScale(0.1);
     ball.setCollideWorldBounds(true);
     players[0].setCollideWorldBounds(true);
@@ -93,6 +100,7 @@ function update() {
    
     if (playerControl.left.isDown) {
         players[1].setVelocityX(-320);
+
     }
     else if (playerControl.right.isDown) {
         players[1].setVelocityX(320);
@@ -104,10 +112,12 @@ function update() {
 
     if (cursors.left.isDown) {
         players[0].setVelocityX(-320);
+        players[0].anims.play('left', true);
 
     }
     else if (cursors.right.isDown) {
         players[0].setVelocityX(320);
+        players[0].anims.play('right', true);
 
 
     }

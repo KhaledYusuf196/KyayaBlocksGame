@@ -1,8 +1,8 @@
 // JavaScript source code
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 400,
+    height: 650,
     physics: {
         default: 'arcade',
         arcade: {
@@ -20,6 +20,7 @@ var targets = [];
 var game = new Phaser.Game(config);
 var players = new Array(2);
 var ball;
+var blocks= new Array(3);
 var playerControl;
 
 var scoreText;
@@ -33,22 +34,25 @@ function preload() {
     }
 
     console.log(this);
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('player', 'assets/character.png');
-    this.load.image('ball', 'assets/ball.png');
-    this.load.image('network', 'assets/network.png');
+    this.load.image('background', 'assets/2.jpg');
+    this.load.image('player', 'assets/player1.png');
+    this.load.image('block', 'assets/block.png');
+    this.load.image('ball', 'assets/ball1.png');
 }
-
 function create() {
 
     cursors = this.input.keyboard.createCursorKeys();
     //this.keyboard.input.keyboard.addkey(Phaser.keyboard.A);
 
-    this.add.image(400, 300, 'sky');
+    this.add.image(200, 322, 'background').setScale(0.9);
     ball = this.physics.add.image(400, 300, 'ball').setScale(0.5);
-    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.1);
-    players[1] = this.physics.add.image(400, 500, 'player').setScale(0.1);
+    players[0] = this.physics.add.image(400, 100, 'player').setScale(0.5);
+    players[1] = this.physics.add.image(400, 500, 'player').setScale(0.5);
     ball.setCollideWorldBounds(true);
+    blocks[0]=this.physics.add.staticImage(100, 200, 'block').setScale(0.5).refreshBody();
+    blocks[1]=this.physics.add.staticImage(150, 350, 'block').setScale(0.5).refreshBody();
+    blocks[2]=this.physics.add.staticImage(300, 420, 'block').setScale(0.5).refreshBody();
+  
     players[0].setCollideWorldBounds(true);
     players[1].setCollideWorldBounds(true);
     ball.setBounce(1);
@@ -57,14 +61,15 @@ function create() {
 
     ball.setVelocityY(-330);
     this.physics.add.overlap(ball, players, pushBall, null, this);
+    this.physics.add.collider(ball, blocks);
     // players[0].setTint(0xff0000);
     // players[1].setTint(0x0000ff);
     players[0].score = 0;
     players[1].score = 0;
 
 
-    targets[0] = this.physics.add.staticImage(400, 0, null);
-    targets[1] = this.physics.add.staticImage(400, 600, null);
+    targets[0] = this.physics.add.staticImage(200, 0, null);
+    targets[1] = this.physics.add.staticImage(200, 650, null);
 
     this.physics.add.overlap(ball, targets[0], () => { score(1) }, null, this);
     this.physics.add.overlap(ball, targets[1], () => { score(0) }, null, this);
